@@ -397,6 +397,9 @@ py_binary(
     name = "abi_verify_ksymtab",
     srcs = ["abi/verify_ksymtab.py"],
     main = "abi/verify_ksymtab.py",
+    data = [
+        "abi/abi_greylist",
+    ],
     visibility = ["//visibility:public"],
     deps = [":symbol_extraction"],
 )

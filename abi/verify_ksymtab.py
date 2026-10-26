@@ -70,6 +70,22 @@ def main():
   # List of symbols defined in the raw_kmi_symbol_list
   kmi_symbols = symbol_extraction.read_symbol_list(args.raw_kmi_symbol_list)
 
+  # [MX_BSP] abi_greylist
+  grey_list = os.path.join(os.path.dirname(sys.argv[0]), "abi_greylist")
+  if os.path.isfile(grey_list):
+    with open(grey_list) as s:
+      print('** abi greylist **')
+      for line in s:
+        l = line.rstrip('\n').split(None, 1)
+        if not l or l[0] == '#':
+          continue
+        removed_symbol = l[0]
+        if removed_symbol in kmi_symbols:
+          print(removed_symbol)
+          kmi_symbols.remove(removed_symbol)
+        else:
+          print(f"{removed_symbol} is not in kmi symbol")
+
   # Set difference to get elements in symbol list but not in ksymtab
   missing_ksymtab_symbols = set(kmi_symbols) - set(ksymtab_symbols)
   if missing_ksymtab_symbols:
