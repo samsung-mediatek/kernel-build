@@ -135,6 +135,9 @@ def create_symbol_list(symbol_list, undefined_symbols, exported,
   symbol_counter = collections.Counter(
       itertools.chain.from_iterable(undefined_symbols.values()))
 
+  if os.path.isfile(symbol_list):
+    os.chmod(symbol_list, 0o666)
+
   with open(symbol_list, "w") as wl:
 
     common_symbols = [
