@@ -21,6 +21,9 @@ build:local --//build/kernel/kleaf:config_local
 # See kernel_module() for details.
 build --strategy=KernelModuleProcessWrapperSandbox=processwrapper-sandbox
 
+# UAPI headers restore a serialized environment that requires a sandbox.
+build --strategy=KernelUapiHeaders=processwrapper-sandbox
+
 # Other strategies are configured on a per-action basis. Check out all callers
 # to kernel_utils.local_exec_requirements to see the full list of
 # actions that respects --config=local.
